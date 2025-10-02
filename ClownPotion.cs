@@ -23,25 +23,24 @@ public class ClownPotion : MonoBehaviour
 		"Why so serious, {playerName}? Let’s {transitiveVerb} a {noun}!",
 		"Your brain’s more pie filled than a {noun}, {playerName}.",
 		"I’m {adverb} entertained by your {adjective} antics, {playerName}.",
-		"Step right up, folks—watch {playerName} {intransitiveVerb} in circles!",
+		"Step right up folks, watch {playerName} {intransitiveVerb} in circles!",
 		"{playerName}, you’re the {intensifier} {adjective} joke of the night.",
-		"Did someone order a {adjective}? Oh, it’s just {playerName}.",
+		"Did someone order a {adjective} goof? Oh, it’s just {playerName}.",
 		"Watch out! {playerName} just {transitiveVerb} the whoopee cushion!",
 		"{playerName}, you’re wobblier than a {noun} on stilts.",
 		"If slapstick was a sport, {playerName} would be champion!",
 		"I’ve seen {noun}s less {adjective} than {playerName}.",
-		"Honker! That’s the sound of {playerName}’s big red nose.",
+		"Honk! That’s the sound of {playerName}’s big red nose.",
 		"Here comes {playerName}, clowning around again!",
 		"{playerName} {intransitiveVerb}s worse than a deflated balloon.",
 		"Your jokes are flat, {playerName}—like yesterday’s {noun}.",
 		"Step right up! {playerName}’s silliness is {intensifier} {adjective}!",
-		"If juggling ideas was a sport, {playerName} would drop ’em all!",
+		"If juggling ideas was a sport, {playerName} would drop them all!",
 		"You wear that {noun} like a true disaster artist, {playerName}.",
-		"{playerName}, I’d say ‘don’t quit your day job,’ but this *is* your day job.",
+		"{playerName}, I’d say don’t quit your day job, but this IS your day job.",
 		"You didn’t just drop the ball, {playerName} juggled it into orbit.",
 		"{playerName}, even the {adjective} mime is judging you.",
-		"Some people trip over words—{playerName} trips over *existence*.",
-
+		"Some people trip over words {playerName} trips over existence.",
 		"{playerName} tried tightrope walking… on a banana peel."
 	};
 	private static readonly string[] transitiveVerbs =
@@ -71,7 +70,7 @@ public class ClownPotion : MonoBehaviour
 
 	private static readonly string[] nouns =
 	{
-		"balloon", "rubber chicken", "big shoe", "stilt", "squirt flower", "clown car", "oversized bow tie",
+		"balloon", "rubber chicken", "big shoe", "stilt", "squirt flower", "clown car", "oversized bowtie",
 		"unicycle", "giant horn", "crazy wig", "red nose", "pie tray"
 	};
 
@@ -83,17 +82,17 @@ public class ClownPotion : MonoBehaviour
 
 	private float coolDownUntilNextSentence = 3f;
 
-    private ParticleSystem particles;
+    private ParticleSystem? particles;
 
     private bool particlesPlaying;
 
-    public Renderer ClownPotionRenderer;
+    public Renderer? ClownPotionRenderer;
 
-    private PhysGrabObject physGrabObject;
+    private PhysGrabObject? physGrabObject;
 
     private State currentState;
 
-    private string playerName;
+    private string? playerName;
 
     private void Start()
     {
@@ -114,8 +113,8 @@ public class ClownPotion : MonoBehaviour
         }
         ClownPotionRenderer.material.mainTextureOffset = new Vector2(0f, Time.time * 0.1f);
         ClownPotionRenderer.material.mainTextureScale = new Vector2(2f + Mathf.Sin(Time.time * 1f) * 0.25f, 2f + Mathf.Sin(Time.time * 1f) * 0.25f);
-        var trails = particles.trails;
-        if (physGrabObject.grabbed)
+        var trails = particles!.trails;
+        if (physGrabObject!.grabbed)
         {
             if (!particlesPlaying)
             {
@@ -146,7 +145,7 @@ public class ClownPotion : MonoBehaviour
 
     private void StateIdle()
     {
-        if (coolDownUntilNextSentence > 0f && physGrabObject.grabbed)
+        if (coolDownUntilNextSentence > 0f && physGrabObject!.grabbed)
         {
             coolDownUntilNextSentence -= Time.deltaTime;
         }
@@ -174,7 +173,7 @@ public class ClownPotion : MonoBehaviour
     private PlayerAvatar FindClosestPlayer()
     {
         List<PlayerAvatar> list = SemiFunc.PlayerGetAllPlayerAvatarWithinRange(10f, PhysGrabber.instance.transform.position);
-        PlayerAvatar playerAvatar = null;
+        PlayerAvatar? playerAvatar = null;
         float num = float.MaxValue;
         foreach (PlayerAvatar item in list)
         {
@@ -188,7 +187,7 @@ public class ClownPotion : MonoBehaviour
                 }
             }
         }
-        return (playerAvatar);
+        return (playerAvatar!);
     }
 
     private void SendMessage()

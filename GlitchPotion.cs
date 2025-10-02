@@ -10,23 +10,24 @@ public class GlitchPotion : MonoBehaviour
     }
 	private static readonly string[] sentenceTemplates =
     {
-        "{playerName} just caused a {noun}—system integrity at risk!",
-        "Warning : {playerName} is {adverb} {intransitiveVerb}!",
+        "{playerName} just caused a {noun}, system integrity at risk!",
+        "Warning! {playerName} is {adverb} {intransitiveVerb}!",
         "{playerName} {transitiveVerb} my code with {intensifier} {adjective} force.",
-        "Error 0xDEADBEEF: {playerName} is too {adjective}.",
-        "Kernel panic: {playerName} overloads the CPU.",
+        "Error 0xDEADBEEF, {playerName} is too {adjective}.",
+        "Kernel panic, {playerName} overloads the CPU.",
         "{playerName}’s logic {intransitiveVerb}s in a {noun}.",
-        "Compiler says: ‘{playerName} does not compute.’",
+        "Compiler says {playerName} does not compute.",
         "{playerName} triggers segmentation fault {adverb}.",
-        "StackOverflowException: {playerName} recursed infinitely!",
-        "Boot sequence hijacked by {playerName}—{intensifier} {adjective}!",
-        "Fatal error: {playerName} is {adverb} {adjective}.",
+        "StackOverflowException, {playerName} recursed infinitely!",
+        "Boot sequence hijacked by {playerName} {intensifier} {adjective}!",
+        "Fatal error, {playerName} is {adverb} {adjective}.",
         "{playerName}’s code is a {noun} waiting to happen.",
         "Unhandled exception at {playerName}.dll!",
         "{playerName} crashes before ‘Hello World’ even starts.",
         "System logs: {playerName} is {intensifier} corrupting memory.",
         "ERROR double free detected on {adjective} {playerName}",
-        "Missing parathesis at {playerName} line two hundred and eleven"
+        "Missing parenthesis at {playerName} line two hundred and eleven",
+        "ERROR {playerName}s {adjective} mods CRASHED, Please reload with ALT plus F4"
 	};
 	private static readonly string[] transitiveVerbs =
 	{
@@ -64,17 +65,17 @@ public class GlitchPotion : MonoBehaviour
 
 	private float coolDownUntilNextSentence = 3f;
 
-    private ParticleSystem particles;
+    private ParticleSystem? particles;
 
     private bool particlesPlaying;
 
-    public Renderer ClownPotionRenderer;
+    public Renderer? ClownPotionRenderer;
 
-    private PhysGrabObject physGrabObject;
+    private PhysGrabObject? physGrabObject;
 
     private State currentState;
 
-    private string playerName;
+    private string? playerName;
 
     private void Start()
     {
@@ -95,8 +96,8 @@ public class GlitchPotion : MonoBehaviour
         }
         ClownPotionRenderer.material.mainTextureOffset = new Vector2(0f, Time.time * 0.1f);
         ClownPotionRenderer.material.mainTextureScale = new Vector2(2f + Mathf.Sin(Time.time * 1f) * 0.25f, 2f + Mathf.Sin(Time.time * 1f) * 0.25f);
-        var trails = particles.trails;
-        if (physGrabObject.grabbed)
+        var trails = particles!.trails;
+        if (physGrabObject!.grabbed)
         {
             if (!particlesPlaying)
             {
@@ -127,7 +128,7 @@ public class GlitchPotion : MonoBehaviour
 
     private void StateIdle()
     {
-        if (coolDownUntilNextSentence > 0f && physGrabObject.grabbed)
+        if (coolDownUntilNextSentence > 0f && physGrabObject!.grabbed)
         {
             coolDownUntilNextSentence -= Time.deltaTime;
         }
@@ -157,7 +158,7 @@ public class GlitchPotion : MonoBehaviour
     private PlayerAvatar FindClosestPlayer()
     {
         List<PlayerAvatar> list = SemiFunc.PlayerGetAllPlayerAvatarWithinRange(10f, PhysGrabber.instance.transform.position);
-        PlayerAvatar playerAvatar = null;
+        PlayerAvatar? playerAvatar = null;
         float num = float.MaxValue;
         foreach (PlayerAvatar item in list)
         {
@@ -171,7 +172,7 @@ public class GlitchPotion : MonoBehaviour
                 }
             }
         }
-        return (playerAvatar);
+        return (playerAvatar!);
     }
 
     private void SendMessage()

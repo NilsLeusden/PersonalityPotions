@@ -9,9 +9,9 @@ public class GrumpyPotion : MonoBehaviour
         Active = 1
     }
 	private static readonly string[] sentenceTemplates =
-{
-    "{playerName} {intransitiveVerb}s about every little {noun}.",
-    "I’m {intensifier} {adjective} at {playerName} today.",
+	{
+	"{playerName} {intransitiveVerb}s about every little {noun}.",
+	"I’m {intensifier} {adjective} at {playerName} today.",
     "{playerName} {transitiveVerb} my patience {adverb}.",
     "Good grief, {playerName} is {intensifier} {adjective}.",
     "Ugh, {playerName} and their {noun}s again.",
@@ -20,19 +20,19 @@ public class GrumpyPotion : MonoBehaviour
     "{playerName} makes me {intransitiveVerb} {adverb}.",
     "I’ll {transitiveVerb} {playerName} for this {noun}.",
     "{playerName} is a {adjective} {noun}, honestly.",
-    "{playerName} moves {adverb} what a {noun}.",
+    "{playerName} moves {adverb}. What a {noun}.",
     "Why is {playerName} so {adjective}? It’s {intensifier} annoying.",
     "This whole place feels like a {noun}.",
     "Why is everything so {intensifier} {adjective} today?",
     "I’m {intransitiveVerb} at life for this {noun}",
-        "{playerName} {intransitiveVerb}s louder than a {noun}.",
+    "{playerName} {intransitiveVerb}s louder than a {noun}.",
     "Honestly, {playerName}'s {noun}s are {intensifier} {adjective}.",
     "If I hear another {noun} from {playerName}, I'll {transitiveVerb} them myself.",
     "Todays weather is {intensifier} dreadful.",
     "I have to deal with you {adjective} people again..",
     "{intensifier} day today, I wish {playerName} stayed home.",
     "I hope {playerName}'s day is {intensifier} ruined.",
-    "{playerName} is closeby, a start to a {intensifier} bad day"
+    "{playerName} is close by, a start to a {intensifier} bad day"
     };
 private static readonly string[] transitiveVerbs =
 {
@@ -73,17 +73,17 @@ private static readonly string[] adverbs =
 };
 	private float coolDownUntilNextSentence = 3f;
 
-    private ParticleSystem particles;
+    private ParticleSystem? particles;
 
     private bool particlesPlaying;
 
-    public Renderer GrumpyPotionRenderer;
+    public Renderer? GrumpyPotionRenderer;
 
-    private PhysGrabObject physGrabObject;
+    private PhysGrabObject? physGrabObject;
 
     private State currentState;
 
-    private string playerName;
+    private string? playerName;
 
     private void Start()
     {
@@ -104,8 +104,8 @@ private static readonly string[] adverbs =
         }
         GrumpyPotionRenderer.material.mainTextureOffset = new Vector2(0f, Time.time * 0.1f);
         GrumpyPotionRenderer.material.mainTextureScale = new Vector2(2f + Mathf.Sin(Time.time * 1f) * 0.25f, 2f + Mathf.Sin(Time.time * 1f) * 0.25f);
-        var trails = particles.trails;
-        if (physGrabObject.grabbed)
+        var trails = particles!.trails;
+        if (physGrabObject!.grabbed)
         {
             if (!particlesPlaying)
             {
@@ -136,7 +136,7 @@ private static readonly string[] adverbs =
 
     private void StateIdle()
     {
-        if (coolDownUntilNextSentence > 0f && physGrabObject.grabbed)
+        if (coolDownUntilNextSentence > 0f && physGrabObject!.grabbed)
         {
             coolDownUntilNextSentence -= Time.deltaTime;
         }

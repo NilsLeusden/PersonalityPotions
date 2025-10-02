@@ -16,10 +16,10 @@ public class BrilliancePotion : MonoBehaviour
 		"{playerName} {intransitiveVerb}s past every {noun}.",
 		"A true {noun}, {playerName} shines {adverb}.",
 		"{playerName} cracks {noun}s with {intensifier} flair.",
-		"Nothing stops {playerName}—{intransitiveVerb} and conquer.",
+		"Nothing stops {playerName} from {intransitiveVerb} and conquer.",
 		"{playerName} {transitiveVerb}s tasks {adverb}.",
 		"{playerName}'s mind is {intensifier} {adjective}.",
-		"{playerName} masters {noun}s {adverb}.",
+		"{playerName} masters {noun} {adverb}.",
 		"{playerName} {transitiveVerb}s challenges {adverb}.",
 		"{playerName} thinks {intensifier} {adjective} thoughts.",
 		"{playerName} makes {noun}s look {adverb}.",
@@ -73,17 +73,17 @@ public class BrilliancePotion : MonoBehaviour
 
 	private float coolDownUntilNextSentence = 3f;
 
-    private ParticleSystem particles;
+    private ParticleSystem? particles;
 
     private bool particlesPlaying;
 
-    public Renderer BrilliancePotionRenderer;
+    public Renderer? BrilliancePotionRenderer;
 
-    private PhysGrabObject physGrabObject;
+    private PhysGrabObject? physGrabObject;
 
     private State currentState;
 
-    private string playerName;
+    private string? playerName;
 
     private void Start()
     {
@@ -104,8 +104,8 @@ public class BrilliancePotion : MonoBehaviour
         }
         BrilliancePotionRenderer.material.mainTextureOffset = new Vector2(0f, Time.time * 0.1f);
         BrilliancePotionRenderer.material.mainTextureScale = new Vector2(2f + Mathf.Sin(Time.time * 1f) * 0.25f, 2f + Mathf.Sin(Time.time * 1f) * 0.25f);
-        var trails = particles.trails;
-        if (physGrabObject.grabbed)
+        var trails = particles!.trails;
+        if (physGrabObject!.grabbed)
         {
             if (!particlesPlaying)
             {
@@ -136,7 +136,7 @@ public class BrilliancePotion : MonoBehaviour
 
     private void StateIdle()
     {
-        if (coolDownUntilNextSentence > 0f && physGrabObject.grabbed)
+        if (coolDownUntilNextSentence > 0f && physGrabObject!.grabbed)
         {
             coolDownUntilNextSentence -= Time.deltaTime;
         }
@@ -164,7 +164,7 @@ public class BrilliancePotion : MonoBehaviour
     private PlayerAvatar FindClosestPlayer()
     {
         List<PlayerAvatar> list = SemiFunc.PlayerGetAllPlayerAvatarWithinRange(10f, PhysGrabber.instance.transform.position);
-        PlayerAvatar playerAvatar = null;
+        PlayerAvatar? playerAvatar = null;
         float num = float.MaxValue;
         foreach (PlayerAvatar item in list)
         {
@@ -178,7 +178,7 @@ public class BrilliancePotion : MonoBehaviour
                 }
             }
         }
-        return (playerAvatar);
+        return (playerAvatar!);
     }
 
     private void SendMessage()
